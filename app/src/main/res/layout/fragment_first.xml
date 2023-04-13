@@ -11,19 +11,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FIAP - IC"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/send_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/msg_recebido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nada recebido"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/send_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recebido"/>
+        app:layout_constraintTop_toBottomOf="@id/recebido" />
 
 
     <EditText
@@ -46,4 +50,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_msg" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="Máximo de caracteres suportado por pacote: 10"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

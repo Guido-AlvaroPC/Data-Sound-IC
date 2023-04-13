@@ -42,6 +42,7 @@ class FirstFragment : Fragment() {
             binding.msgRecebido.text = "Valor recebido:" + shortCode?.getShortCode().toString()
         }
     }
+
     @Inject
     var chirpSDK: ChirpSDK? = null
 
@@ -70,13 +71,8 @@ class FirstFragment : Fragment() {
                     delay(2000)
                 }
             }
-//            for (palavra in splitString())
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                //Do something after 100ms
-//                chirpSDK?.play(ShortCode(palavra))
-//            }, 7000)
-//            for (palavra in splitString())
-//            chirpSDK?.play(ShortCode(palavra))
+
+
         }
     }
 
