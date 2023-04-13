@@ -2,9 +2,11 @@ package com.br.fiap.chirpdemo
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.br.fiap.chirpdemo.chirp.ChirpSDK
@@ -12,12 +14,17 @@ import com.br.fiap.chirpdemo.chirp.ShortCode
 import com.br.fiap.chirpdemo.databinding.FragmentFirstBinding
 import io.chirp.chirpengine.ChirpEngine
 import io.chirp.chirpengine.ChirpEngineObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class FirstFragment : Fragment() {
+    var editValor : EditText? = null
     val KEY = "chirp_android_1_4_0"
     val PWD = "Yur87CLY9Hg4hdebqYGAJjVhlRMAb7SPhXjiV1U7Qo5cx6D16W"
     private val handler = Handler()
@@ -57,10 +64,27 @@ class FirstFragment : Fragment() {
         chirpSDK = activity?.baseContext?.let { it1 -> ChirpSDK(it1, KEY, PWD) }
         ChirpEngine().setListener(this.chirpEngineListener)
         binding.sendMsg.setOnClickListener {
-            chirpSDK?.play(ShortCode(binding.edtMsg.text.toString()))
+            val repeatableJob = CoroutineScope(Dispatchers.IO).launch {
+                for (palavra in splitString()) {
+                    chirpSDK?.play(ShortCode(palavra.toString()))
+                    delay(2000)
+                }
+            }
+//            for (palavra in splitString())
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                //Do something after 100ms
+//                chirpSDK?.play(ShortCode(palavra))
+//            }, 7000)
+//            for (palavra in splitString())
+//            chirpSDK?.play(ShortCode(palavra))
         }
     }
 
+    fun splitString(): List<CharSequence> {
+//            val str = "otorrinolaringologista"
+        val str = binding.edtMsg.text.toString()
+        return str.chunked(10) {it.padEnd(10,'o')}
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
