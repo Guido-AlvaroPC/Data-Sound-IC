@@ -3,6 +3,7 @@ package com.br.fiap.chirpdemo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,8 @@ class FirstFragment : Fragment() {
     val PWD = "Yur87CLY9Hg4hdebqYGAJjVhlRMAb7SPhXjiV1U7Qo5cx6D16W"
     private val handler = Handler()
     private var _binding: FragmentFirstBinding? = null
+    val lista = mutableListOf<String>()
+
     private val chirpEngineListener: ChirpEngineObserver = object : ChirpEngineObserver {
         // from class: io.chirp.sdk.ChirpSDK.5
         // io.chirp.chirpengine.ChirpEngineObserver
@@ -38,9 +41,19 @@ class FirstFragment : Fragment() {
     }
 
     fun notifyObserversShortCodeReceived(shortCode: ShortCode?) {
-        activity?.runOnUiThread {
-            binding.msgRecebido.text = "Valor recebido:" + shortCode?.getShortCode().toString()
+        if (shortCode?.getShortCode().toString().last().equals('1')) {
+            lista.add(shortCode?.getShortCode().toString())
+            Log.e("Fim de lista",lista.toString())
+            val concatenaString =   lista.joinToString("")
+            val trocaString = concatenaString.replace("1","")
+            activity?.runOnUiThread {
+                binding.msgRecebido.text =  trocaString
+            }
+            lista.clear()
         }
+        else
+            lista.add(shortCode?.getShortCode().toString())
+
     }
 
     @Inject
@@ -73,16 +86,18 @@ class FirstFragment : Fragment() {
             }
 
 
+
         }
     }
 
     fun splitString(): List<CharSequence> {
 //            val str = "otorrinolaringologista"
         val str = binding.edtMsg.text.toString()
-        return str.chunked(10) {it.padEnd(10,'o')}
+        return str.chunked(10) {it.padEnd(10,'1')}
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }

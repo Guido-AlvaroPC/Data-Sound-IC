@@ -1,6 +1,7 @@
 package com.br.fiap.chirpdemo.chirp
 
 import android.content.Context
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.br.fiap.chirpdemo.FirstFragment
@@ -16,6 +17,8 @@ class ChirpSDK(context: Context, appKey: String, appSecret: String) {
     private var appSecret: String? = appSecret
     private var audioThread: Thread? = null
     var texto:String? = null
+
+    val lista = mutableListOf<String>()
     private val observers: MutableList<ChirpSDKObserver?> = ArrayList()
     private val chirpEngineListener: ChirpEngineObserver = object : ChirpEngineObserver {
         // from class: io.chirp.sdk.ChirpSDK.5
@@ -71,7 +74,21 @@ class ChirpSDK(context: Context, appKey: String, appSecret: String) {
 
     fun notifyObserversShortCodeReceived(shortCode: ShortCode?) {
 
-        Toast.makeText(context,shortCode.toString(),Toast.LENGTH_LONG).show()
+
+        if (shortCode.toString().last().equals("1")) {
+            lista.add(shortCode.toString())
+            Log.e("Fim de lista",lista.toString())
+        }
+        else
+            lista.add(shortCode.toString())
+
+//        Toast.makeText(context,shortCode.toString(),Toast.LENGTH_LONG).show()
 
     }
+
+//    fun validaString(): List<CharSequence> {
+//        val str = binding.edtMsg.text.toString()
+//        return str.chunked(10) {it.padEnd(10,'1')}
+//    }
+
 }
